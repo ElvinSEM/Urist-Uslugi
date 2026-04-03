@@ -1,0 +1,5 @@
+<%= form_with model: [:admin, category], class: "grid gap-4 rounded-2xl bg-slate-900 p-6" do |f| %>
+  <%= f.text_field :name, placeholder: "Название", class: "rounded-lg border-slate-700 bg-slate-950" %>
+  <%= f.text_area :description, rows: 5, placeholder: "Описание", class: "rounded-lg border-slate-700 bg-slate-950" %>
+  <%= f.submit "Сохранить", class: "rounded-lg bg-amber-500 px-4 py-2 text-black" %>
+<% end %>

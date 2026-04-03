@@ -1,0 +1,9 @@
+<%= form_with model: [:admin, service], class: "grid gap-4 rounded-2xl bg-slate-900 p-6" do |f| %>
+  <%= f.collection_select :category_id, Category.order(:name), :id, :name, {}, class: "rounded-lg border-slate-700 bg-slate-950" %>
+  <%= f.text_field :title, placeholder: "Название", class: "rounded-lg border-slate-700 bg-slate-950" %>
+  <%= f.text_area :description, rows: 6, placeholder: "Описание", class: "rounded-lg border-slate-700 bg-slate-950" %>
+  <%= f.number_field :price_cents, placeholder: "Цена в копейках", class: "rounded-lg border-slate-700 bg-slate-950" %>
+  <%= f.number_field :position, placeholder: "Позиция", class: "rounded-lg border-slate-700 bg-slate-950" %>
+  <label class="flex items-center gap-2"><%= f.check_box :published %> Published</label>
+  <%= f.submit "Сохранить", class: "rounded-lg bg-amber-500 px-4 py-2 text-black" %>
+<% end %>

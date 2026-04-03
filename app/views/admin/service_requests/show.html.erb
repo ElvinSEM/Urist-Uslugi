@@ -1,0 +1,11 @@
+<h1 class="mb-6 text-3xl font-semibold">Request #<%= @service_request.id %></h1>
+<div class="rounded-2xl bg-slate-900 p-6">
+  <p><strong>Service:</strong> <%= @service_request.service.title %></p>
+  <p><strong>Status:</strong> <%= @service_request.status %></p>
+  <p><strong>Client:</strong> <%= @service_request.client.full_name %></p>
+  <div class="mt-6 flex gap-3">
+    <% ServiceRequest.statuses.keys.each do |status| %>
+      <%= button_to status, transition_admin_service_request_path(@service_request, status: status), method: :patch, class: "rounded-lg bg-amber-500 px-3 py-2 text-black" %>
+    <% end %>
+  </div>
+</div>

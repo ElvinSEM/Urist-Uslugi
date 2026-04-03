@@ -1,0 +1,2 @@
+<%= section_heading("Новая заявка", @service&.title.present? ? "Отправка заявки на услугу «#{@service.title}»." : "Опиши задачу, и мы свяжемся с тобой.") %>
+<%= render "form", service_request: @service_request, service: @service %>

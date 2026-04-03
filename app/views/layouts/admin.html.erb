@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Admin | Юрист Услуги</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="bg-slate-950 text-slate-100">
+    <div class="grid min-h-screen grid-cols-[260px_1fr]">
+      <aside class="border-r border-slate-800 p-6">
+        <div class="mb-8 text-xl font-semibold">Admin</div>
+        <nav class="flex flex-col gap-3 text-sm">
+          <%= link_to "Dashboard", admin_root_path %>
+          <%= link_to "Users", admin_users_path %>
+          <%= link_to "Categories", admin_categories_path %>
+          <%= link_to "Services", admin_services_path %>
+          <%= link_to "Requests", admin_service_requests_path %>
+        </nav>
+      </aside>
+      <main class="p-8"><%= yield %></main>
+    </div>
+  </body>
+</html>

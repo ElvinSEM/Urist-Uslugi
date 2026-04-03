@@ -1,0 +1,9 @@
+<h1 class="mb-6 text-3xl font-semibold">Users</h1>
+<div class="rounded-2xl bg-slate-900">
+  <% @users.each do |user| %>
+    <div class="flex items-center justify-between border-t border-slate-800 p-4 first:border-t-0">
+      <span><%= user.full_name %> • <%= user.email %></span>
+      <span><%= user.role %></span>
+    </div>
+  <% end %>
+</div>

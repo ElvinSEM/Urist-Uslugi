@@ -1,0 +1,9 @@
+<% if breadcrumbs.any? %>
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <ol>
+      <% breadcrumbs.each do |breadcrumb| %>
+        <li><%= link_to_unless_current breadcrumb.name, breadcrumb.path %></li>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>

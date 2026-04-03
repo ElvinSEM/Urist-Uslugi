@@ -1,0 +1,32 @@
+<header class="site-header">
+  <div class="site-shell">
+    <div class="site-brand">
+      <%= link_to root_path, class: "brand-link" do %>
+        <span class="brand-mark">LU</span>
+        <span>
+          <strong>Юрист Услуги</strong>
+          <small>Legal Services</small>
+        </span>
+      <% end %>
+    </div>
+
+    <nav class="site-nav" aria-label="Основная навигация">
+      <%= link_to "Услуги", services_path, class: nav_link_class(services_path) %>
+      <% if user_signed_in? %>
+        <%= link_to "Заявки", service_requests_path, class: nav_link_class(service_requests_path) %>
+        <%= link_to "Уведомления", notifications_path, class: nav_link_class(notifications_path) %>
+      <% end %>
+      <% if user_signed_in? && current_user.admin? %>
+        <%= link_to "Админка", admin_root_path, class: "nav-link" %>
+      <% end %>
+    </nav>
+
+    <div class="site-actions">
+      <% if user_signed_in? %>
+        <span class="user-chip"><%= current_user.full_name %></span>
+      <% else %>
+        <%= link_to "Войти", new_user_session_path, class: "button button-secondary" %>
+      <% end %>
+    </div>
+  </div>
+</header>

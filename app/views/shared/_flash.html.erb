@@ -1,0 +1,11 @@
+<turbo-frame id="flash">
+  <% flash.each do |type, message| %>
+    <div class="flash flash-<%= type %>" data-controller="flash" data-action="animationend->flash#remove">
+      <div>
+        <strong><%= type.to_s.humanize %></strong>
+        <p><%= message %></p>
+      </div>
+      <button type="button" class="flash-close" data-action="click->flash#remove" aria-label="Закрыть">×</button>
+    </div>
+  <% end %>
+</turbo-frame>

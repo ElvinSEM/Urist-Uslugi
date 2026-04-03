@@ -1,0 +1,11 @@
+<%= section_heading(@category.name, @category.description.presence || "Подбор юридических услуг в выбранной категории.") %>
+
+<section class="services-grid" aria-label="Услуги категории">
+  <% if @services.any? %>
+    <% @services.each do |service| %>
+      <%= render "shared/service_card", service: service %>
+    <% end %>
+  <% else %>
+    <%= render "shared/empty_state", title: "В категории пока нет услуг", description: "Добавь новые услуги в админке или выбери другую категорию." %>
+  <% end %>
+</section>

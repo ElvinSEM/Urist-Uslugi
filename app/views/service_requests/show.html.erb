@@ -1,0 +1,3 @@
+<%= turbo_stream_from @service_request %>
+<%= section_heading("Заявка ##{@service_request.id}", "Детали заявки и её текущий статус.") %>
+<%= render "panel", service_request: @service_request %>

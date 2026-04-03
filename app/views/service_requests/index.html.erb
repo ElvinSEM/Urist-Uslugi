@@ -1,0 +1,13 @@
+<%= turbo_stream_from [current_user, :service_requests] if current_user.present? %>
+
+<%= section_heading("Мои заявки", "Статусы заявок обновляются автоматически без перезагрузки страницы.") %>
+
+<section id="service_requests" class="request-list" aria-live="polite">
+  <% if @service_requests.any? %>
+    <% @service_requests.each do |service_request| %>
+      <%= render "service_request", service_request: service_request %>
+    <% end %>
+  <% else %>
+    <%= render "shared/empty_state", title: "Пока нет заявок", description: "Выбери услугу и отправь первую заявку через карточку услуги." %>
+  <% end %>
+</section>

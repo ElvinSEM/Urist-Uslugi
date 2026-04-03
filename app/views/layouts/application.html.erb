@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <%= display_meta_tags %>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <script type="application/ld+json">
+      <%= raw({
+        "@context": "https://schema.org",
+        "@type": "LegalService",
+        "name": "Юрист Услуги",
+        "url": root_url,
+        "description": "Юридические услуги с онлайн-заявками и сопровождением клиентов",
+        "areaServed": "Russia"
+      }.to_json) %>
+    </script>
+  </head>
+  <body>
+    <%= render "shared/navbar" %>
+    <main class="site-main">
+      <%= render "shared/breadcrumbs" %>
+      <%= render "shared/flash" %>
+      <%= yield %>
+    </main>
+    <%= render "shared/footer" %>
+  </body>
+</html>

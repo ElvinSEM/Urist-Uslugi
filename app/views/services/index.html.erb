@@ -1,0 +1,42 @@
+<section class="hero-section">
+  <div class="hero-copy">
+    <span class="eyebrow">Legal Services Platform</span>
+    <%= section_heading("Юридические услуги", "Подбор услуг, прозрачная стоимость и быстрые онлайн-заявки для бизнеса и частных клиентов.") %>
+  </div>
+  <aside class="hero-panel">
+    <dl class="stats-grid">
+      <div class="stat-item">
+        <dt>Услуг</dt>
+        <dd><%= Service.published.count %>+</dd>
+      </div>
+      <div class="stat-item">
+        <dt>Категорий</dt>
+        <dd><%= Category.count %></dd>
+      </div>
+      <div class="stat-item">
+        <dt>Статусы</dt>
+        <dd>Live</dd>
+      </div>
+    </dl>
+  </aside>
+</section>
+
+<section class="panel" aria-labelledby="service-filter-heading">
+  <h2 id="service-filter-heading" class="panel-title">Поиск и фильтрация</h2>
+  <%= form_with url: services_path, method: :get, class: "filter-grid", data: { controller: "filter" } do |f| %>
+    <%= f.text_field :query, value: params[:query], placeholder: "Поиск по названию и описанию", class: "field", data: { action: "input->filter#submitDebounced" } %>
+    <%= f.collection_select :category_id, Category.order(:name), :id, :name, { include_blank: "Все категории" }, class: "field", data: { action: "change->filter#submitNow" } %>
+    <%= f.number_field :price_from, value: params[:price_from], placeholder: "Цена от", class: "field", data: { action: "input->filter#submitDebounced" } %>
+    <%= f.number_field :price_to, value: params[:price_to], placeholder: "Цена до", class: "field", data: { action: "input->filter#submitDebounced" } %>
+  <% end %>
+</section>
+
+<section class="services-grid" aria-label="Список услуг">
+  <% if @services.any? %>
+    <% @services.each do |service| %>
+      <%= render "shared/service_card", service: service %>
+    <% end %>
+  <% else %>
+    <%= render "shared/empty_state", title: "Услуги не найдены", description: "Попробуй изменить фильтры или очистить поисковый запрос." %>
+  <% end %>
+</section>

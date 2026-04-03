@@ -1,0 +1,9 @@
+<h1 class="mb-6 text-3xl font-semibold">Уведомления</h1>
+<div class="grid gap-4">
+  <% @notifications.each do |notification| %>
+    <%= link_to notification_path(notification), class: "rounded-xl bg-white p-5 shadow-sm" do %>
+      <p class="font-medium"><%= notification.title %></p>
+      <p class="mt-2 text-sm text-stone-600"><%= notification.body %></p>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,19 @@
+<article class="service-card">
+  <% cache service do %>
+    <div class="service-card-media">
+      <%= image_tag "/icon.svg", alt: "", loading: "lazy", width: 48, height: 48 %>
+    </div>
+    <div class="service-card-body">
+      <p class="eyebrow"><%= service.category_name %></p>
+      <h2 class="service-card-title"><%= link_to service.title, service_path(service) %></h2>
+      <p class="service-card-description"><%= truncate(service.description, length: 150) %></p>
+    </div>
+    <footer class="service-card-footer">
+      <strong class="price-inline"><%= number_to_currency(service.price, unit: "₽") %></strong>
+      <div class="service-card-actions">
+        <%= link_to "Подробнее", service_path(service), class: "button button-secondary" %>
+        <%= link_to "Оставить заявку", new_service_request_path(service_id: service.id), class: "button button-primary" %>
+      </div>
+    </footer>
+  <% end %>
+</article>

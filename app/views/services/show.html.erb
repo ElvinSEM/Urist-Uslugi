@@ -1,0 +1,29 @@
+<article class="service-layout">
+  <section class="service-content">
+    <span class="eyebrow"><%= @service.category_name %></span>
+    <h1 class="service-title"><%= @service.title %></h1>
+    <p class="service-description"><%= @service.description %></p>
+
+    <section class="panel">
+      <h2 class="panel-title">Что входит</h2>
+      <ul class="feature-list">
+        <li>Первичный юридический разбор</li>
+        <li>Подготовка документов и сопровождение</li>
+        <li>Прозрачный статус выполнения</li>
+      </ul>
+    </section>
+  </section>
+
+  <aside class="service-sidebar">
+    <div class="price-card">
+      <p class="price-label">Стоимость</p>
+      <div class="price-value"><%= number_to_currency(@service.price, unit: "₽") %></div>
+      <p class="muted-text">Фиксированная базовая цена. Итоговые условия уточняются после оценки задачи.</p>
+      <%= link_to "Оставить заявку", new_service_request_path(service_id: @service.id), class: "button button-primary button-block" %>
+    </div>
+  </aside>
+</article>
+
+<script type="application/ld+json">
+  <%= raw(service_schema(@service).to_json) %>
+</script>

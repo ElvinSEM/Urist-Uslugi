@@ -1,0 +1,6 @@
+<h1 class="mb-6 text-3xl font-semibold">Requests</h1>
+<% @service_requests.each do |request| %>
+  <%= link_to admin_service_request_path(request), class: "mb-3 block rounded-xl bg-slate-900 p-4" do %>
+    #<%= request.id %> • <%= request.service.title %> • <%= request.status %>
+  <% end %>
+<% end %>

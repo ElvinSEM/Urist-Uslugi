@@ -1,0 +1,14 @@
+<article id="<%= dom_id(service_request) %>" class="request-card">
+  <header class="request-card-header">
+    <div>
+      <p class="request-card-kicker"><%= service_request.service.category_name %></p>
+      <h2 class="request-card-title"><%= link_to service_request.service.title, service_request_path(service_request) %></h2>
+    </div>
+    <span class="<%= status_badge_class(service_request.status) %>"><%= service_request.status.humanize %></span>
+  </header>
+  <p class="muted-text"><%= truncate(service_request.description, length: 150) %></p>
+  <footer class="request-card-footer">
+    <span>Заявка #<%= service_request.id %></span>
+    <span><%= l(service_request.created_at, format: :short) %></span>
+  </footer>
+</article>

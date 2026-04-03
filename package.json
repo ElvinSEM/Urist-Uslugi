@@ -1,0 +1,8 @@
+{
+  "name": "urist-uslugi",
+  "private": true,
+  "scripts": {
+    "build": "echo 'importmap app'",
+    "lint": "echo 'no js lint configured'"
+  }
+}

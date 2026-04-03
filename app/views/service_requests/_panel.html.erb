@@ -1,0 +1,21 @@
+<article id="<%= dom_id(service_request, :panel) %>" class="request-panel">
+  <header class="request-panel-header">
+    <div>
+      <p class="eyebrow"><%= service_request.service.category_name %></p>
+      <h2 class="request-card-title"><%= service_request.service.title %></h2>
+    </div>
+    <span class="<%= status_badge_class(service_request.status) %>"><%= service_request.status.humanize %></span>
+  </header>
+
+  <dl class="request-meta">
+    <div><dt>Клиент</dt><dd><%= service_request.full_name %></dd></div>
+    <div><dt>Email</dt><dd><%= mail_to service_request.email %></dd></div>
+    <div><dt>Телефон</dt><dd><%= service_request.phone %></dd></div>
+    <div><dt>Юрист</dt><dd><%= service_request.lawyer&.full_name || "Назначается" %></dd></div>
+  </dl>
+
+  <section class="panel panel-muted">
+    <h3 class="panel-title">Описание задачи</h3>
+    <p class="service-description"><%= service_request.description %></p>
+  </section>
+</article>
