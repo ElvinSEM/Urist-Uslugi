@@ -11,7 +11,7 @@ module UristUslugi
     config.time_zone = "Europe/Simferopol"
     config.i18n.default_locale = :ru
     config.active_job.queue_adapter = :solid_queue
-    config.middleware.use Rack::Attack
+    # config.middleware.use Rack::Attack
 
     config.generators do |g|
       g.test_framework :rspec,
