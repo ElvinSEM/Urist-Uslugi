@@ -16,18 +16,19 @@ test:
   database: <%= ENV.fetch("POSTGRES_TEST_DB", "urist_uslugi_test") %>
 
 production:
-  primary: &primary_production
-    <<: *default
-    database: <%= ENV.fetch("POSTGRES_DB", "urist_uslugi_production") %>
-  cache:
-    <<: *primary_production
-    database: <%= ENV.fetch("POSTGRES_CACHE_DB", "urist_uslugi_production_cache") %>
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: <%= ENV.fetch("POSTGRES_QUEUE_DB", "urist_uslugi_production_queue") %>
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: <%= ENV.fetch("POSTGRES_CABLE_DB", "urist_uslugi_production_cable") %>
-    migrations_paths: db/cable_migrate
+#  primary: &primary_production
+#    <<: *default
+#    database: <%= ENV.fetch("POSTGRES_DB", "urist_uslugi_production") %>
+#  cache:
+#    <<: *primary_production
+#    database: <%= ENV.fetch("POSTGRES_CACHE_DB", "urist_uslugi_production_cache") %>
+#    migrations_paths: db/cache_migrate
+#  queue:
+#    <<: *primary_production
+#    database: <%= ENV.fetch("POSTGRES_QUEUE_DB", "urist_uslugi_production_queue") %>
+#    migrations_paths: db/queue_migrate
+#  cable:
+#    <<: *primary_production
+#    database: <%= ENV.fetch("POSTGRES_CABLE_DB", "urist_uslugi_production_cable") %>
+#    migrations_paths: db/cable_migrate
+  url: <%= ENV['DATABASE_URL'] %>
