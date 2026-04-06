@@ -35,8 +35,18 @@ CREATE UNIQUE INDEX idx_daily_stats_day ON daily_stats(day);
 END IF;
 END$$;
 
+--------------------------------------------------
+
 -- top_services
-CREATE MATERIALIZED VIEW IF NOT EXISTS top_services AS
+-- Проверяем, есть ли колонка completed_at
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM pg_attribute a
+        JOIN pg_class c ON a.attrelid = c.oid
+        WHERE c.relname = 'service_requests' AND a.attname = 'completed_at'
+    ) THEN
+        CREATE MATERIALIZED VIEW IF NOT EXISTS top_services AS
 SELECT
     services.id,
     services.title,
@@ -50,7 +60,25 @@ WHERE service_requests.created_at > NOW() - INTERVAL '90 days'
 GROUP BY services.id
 ORDER BY requests_count DESC
     LIMIT 100;
+ELSE
+        -- Если колонки нет, создаем MV без avg_completion_time_hours
+        CREATE MATERIALIZED VIEW IF NOT EXISTS top_services AS
+SELECT
+    services.id,
+    services.title,
+    services.slug,
+    COUNT(service_requests.id) AS requests_count,
+    NULL AS avg_completion_time_hours
+FROM services
+         LEFT JOIN service_requests ON services.id = service_requests.service_id
+WHERE service_requests.created_at > NOW() - INTERVAL '90 days'
+GROUP BY services.id
+ORDER BY requests_count DESC
+    LIMIT 100;
+END IF;
+END$$;
 
+-- Создаем индекс
 DO $$
 BEGIN
     IF NOT EXISTS (
