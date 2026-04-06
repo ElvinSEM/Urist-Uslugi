@@ -1,21 +1,19 @@
-# threads
+# config/puma.rb
+
 threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 
-# порт
 port ENV.fetch("PORT") { 3000 }
+environment ENV.fetch("RAILS_ENV") { "production" }
 
-# среда
-environment ENV.fetch("RAILS_ENV") { "development" }
+# На Render обязательно 0 воркеров, чтобы не падал кластер
+workers 0
 
-# один воркер, т.к. Render выделяет один контейнер
-workers ENV.fetch("WEB_CONCURRENCY") { 0 }
-
-# перезапуск через rails
+# Разрешаем перезапуск через bin/rails restart
 plugin :tmp_restart
 
-# solid_queue если нужно
+# Solid Queue, если нужно
 plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 
-# pid файл
+# PID файл (если нужно)
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
