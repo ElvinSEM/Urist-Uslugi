@@ -31,14 +31,13 @@ BEGIN
         JOIN pg_namespace n ON n.oid = c.relnamespace
         WHERE c.relname = 'idx_daily_stats_day'
     ) THEN
-CREATE UNIQUE INDEX idx_daily_stats_day ON daily_stats(day);
+        EXECUTE 'CREATE UNIQUE INDEX idx_daily_stats_day ON daily_stats(day);';
 END IF;
 END$$;
 
 --------------------------------------------------
 
 -- top_services
--- Проверяем, есть ли колонка completed_at
 DO $$
 BEGIN
     IF EXISTS (
@@ -46,7 +45,8 @@ BEGIN
         JOIN pg_class c ON a.attrelid = c.oid
         WHERE c.relname = 'service_requests' AND a.attname = 'completed_at'
     ) THEN
-        CREATE MATERIALIZED VIEW IF NOT EXISTS top_services AS
+        EXECUTE $sql$
+            CREATE MATERIALIZED VIEW IF NOT EXISTS top_services AS
 SELECT
     services.id,
     services.title,
@@ -60,9 +60,10 @@ WHERE service_requests.created_at > NOW() - INTERVAL '90 days'
 GROUP BY services.id
 ORDER BY requests_count DESC
     LIMIT 100;
+$sql$;
 ELSE
-        -- Если колонки нет, создаем MV без avg_completion_time_hours
-        CREATE MATERIALIZED VIEW IF NOT EXISTS top_services AS
+        EXECUTE $sql$
+            CREATE MATERIALIZED VIEW IF NOT EXISTS top_services AS
 SELECT
     services.id,
     services.title,
@@ -75,10 +76,10 @@ WHERE service_requests.created_at > NOW() - INTERVAL '90 days'
 GROUP BY services.id
 ORDER BY requests_count DESC
     LIMIT 100;
+$sql$;
 END IF;
 END$$;
 
--- Создаем индекс
 DO $$
 BEGIN
     IF NOT EXISTS (
@@ -86,6 +87,6 @@ BEGIN
         JOIN pg_namespace n ON n.oid = c.relnamespace
         WHERE c.relname = 'idx_top_services_id'
     ) THEN
-CREATE UNIQUE INDEX idx_top_services_id ON top_services(id);
+        EXECUTE 'CREATE UNIQUE INDEX idx_top_services_id ON top_services(id);';
 END IF;
 END$$;
