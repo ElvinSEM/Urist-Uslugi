@@ -31,4 +31,4 @@ production:
   #    <<: *primary_production
   #    database: <%= ENV.fetch("POSTGRES_CABLE_DB", "urist_uslugi_production_cable") %>
   #    migrations_paths: db/cable_migrate
-  url: <%= postgresql://urist_elvin:g7kHUouxijcJgbzl3Gdv3Z7XTYcIK4tJ@dpg-d77t8hudqaus73bdt0mg-a/urist_uslugi %>
+  url: postgresql://urist_elvin:g7kHUouxijcJgbzl3Gdv3Z7XTYcIK4tJ@dpg-d77t8hudqaus73bdt0mg-a/urist_uslugi
