@@ -3,11 +3,11 @@ class ServiceRequest < ApplicationRecord
 
   audited associated_with: :service
 
-  belongs_to :service
-  belongs_to :client, class_name: "User"
-  belongs_to :lawyer, class_name: "User", optional: true
+  belongs_to :service, inverse_of: :service_requests
+  belongs_to :client, class_name: "User", inverse_of: :service_requests
+  belongs_to :lawyer, class_name: "User", inverse_of: :assigned_service_requests, optional: true
 
-  has_many :notifications, as: :notifiable, dependent: :destroy
+  has_many :notifications, as: :notifiable, dependent: :destroy, inverse_of: :notifiable
 
   enum :status, {
     pending: 0,
@@ -20,6 +20,10 @@ class ServiceRequest < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc) }
   scope :with_status, ->(value) { where(status: value) if value.present? }
+  scope :for_client, ->(client) { where(client: client) if client.present? }
+  scope :for_lawyer, ->(lawyer) { where(lawyer: lawyer) if lawyer.present? }
+  scope :assigned, -> { where.not(lawyer_id: nil) }
+  scope :unassigned, -> { where(lawyer_id: nil) }
 
   after_create_commit :enqueue_created_notification
   after_create_commit :broadcast_created

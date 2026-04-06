@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_02_000800) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_04_072656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,6 +49,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_02_000800) do
     t.datetime "exp", null: false
     t.string "jti", null: false
     t.index ["jti"], name: "index_jwt_denylists_on_jti"
+  end
+
+  create_table "materialized_views_for_analytics", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "notifications", force: :cascade do |t|

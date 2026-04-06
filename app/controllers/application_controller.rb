@@ -2,9 +2,10 @@ class ApplicationController < ActionController::Base
   include Pagy::Method
   include Pundit::Authorization
   include BreadcrumbsOnRails::ActionController
+  include PageContext
 
   allow_browser versions: :modern
-  before_action :authenticate_user!, if: :protected_area?
+  # before_action :authenticate_user!, if: :protected_area?
   before_action :set_meta_defaults
 
   rescue_from Pundit::NotAuthorizedError, with: :forbidden!
@@ -19,13 +20,13 @@ class ApplicationController < ActionController::Base
 
   def set_meta_defaults
     set_meta_tags(
-      site: "Юрист Услуги",
+      site: "Услуги Юриста",
       title: "Юридические услуги",
       description: "Онлайн-платформа юридических услуг с заявками, поиском и уведомлениями",
-      keywords: %w[юрист адвокат договор регистрация ооо недвижимость претензия],
+      keywords: %w[Услуги Юриста адвокат договор регистрация ооо недвижимость претензия],
       reverse: true,
       og: {
-        title: "Юрист Услуги",
+        title: "Услуги Юриста",
         description: "Подбор юридических услуг, онлайн-заявки и сопровождение клиентов",
         type: "website",
         url: request.original_url
@@ -36,4 +37,13 @@ class ApplicationController < ActionController::Base
   def forbidden!
     redirect_back fallback_location: root_path, alert: "Недостаточно прав"
   end
+  def after_sign_in_path_for(resource)
+    if resource.admin?
+      admin_root_path
+    else
+      root_path
+    end
+  end
 end
+
+

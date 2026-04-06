@@ -1,0 +1,47 @@
+<section class="landing-hero">
+  <div class="landing-hero-content">
+    <div class="landing-hero-copy">
+      <span class="eyebrow">Юридические услуги онлайн</span>
+      <h1 class="landing-hero-title">Юридическая помощь, где понятен следующий шаг</h1>
+      <p class="landing-hero-subtitle">
+        Выберите услугу, оставьте заявку и получите сопровождение без лишней бюрократии.
+        Работаем с частными клиентами и бизнесом.
+      </p>
+
+      <div class="landing-actions">
+        <%= link_to "Выбрать услугу", "#services", class: "button button-primary" %>
+        <%= link_to "Оставить заявку", "#lead-form", class: "button button-secondary" %>
+      </div>
+
+      <dl class="landing-hero-stats">
+        <div class="landing-mini-stat">
+          <dt>Сервисы</dt>
+          <dd><%= @services.count %></dd>
+        </div>
+        <div class="landing-mini-stat">
+          <dt>Формат</dt>
+          <dd>Онлайн</dd>
+        </div>
+        <div class="landing-mini-stat">
+          <dt>Фокус</dt>
+          <dd>Понятно и по делу</dd>
+        </div>
+      </dl>
+    </div>
+
+    <aside class="landing-hero-panel" aria-label="Быстрый старт">
+      <p class="landing-panel-kicker">Быстрый старт</p>
+      <h2 class="landing-panel-title">Что вы получите</h2>
+      <ul class="landing-panel-list">
+        <li>Подбор подходящей услуги без долгого поиска</li>
+        <li>Понятный маршрут по шагам и срокам</li>
+        <li>Быструю обратную связь по заявке</li>
+      </ul>
+
+      <div class="landing-panel-note">
+        <strong>Направления:</strong>
+        <p>Договоры, претензии, регистрация бизнеса, сопровождение сделок и защита интересов.</p>
+      </div>
+    </aside>
+  </div>
+</section>

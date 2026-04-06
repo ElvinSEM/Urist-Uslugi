@@ -1,6 +1,6 @@
 class Api::V1::NotificationsController < Api::V1::BaseController
   def index
-    @pagy, notifications = pagy(current_user.notifications.order(created_at: :desc))
+    @pagy, notifications = pagy(current_user.notifications.recent)
     render json: { data: notifications.map { |notification| Api::V1::NotificationSerializer.call(notification) }, meta: pagination_meta(@pagy) }
   end
 

@@ -23,7 +23,7 @@ gem "pundit"
 gem "audited", "~> 5.7"
 gem "meta-tags"
 gem "breadcrumbs_on_rails"
-gem "rack-attack"
+# # gem "rack-attack"
 gem "rack-cors"
 gem "lograge"
 gem "sentry-ruby"
@@ -56,3 +56,7 @@ group :test do
   gem "shoulda-matchers"
   gem "database_cleaner-active_record"
 end
+gem 'pghero', '~> 3.5'
+gem 'rack-mini-profiler'
+gem 'bullet', group: :development
+gem 'rails-pg-extras', group: :development

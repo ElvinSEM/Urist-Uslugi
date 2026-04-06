@@ -1,4 +1,6 @@
 class Api::V1::BaseController < ActionController::API
+  include ActionController::RequestForgeryProtection
+  protect_from_forgery with: :null_session, if: -> { request.format.json? }
   include Devise::Controllers::Helpers
   include Pagy::Method
   include Pundit::Authorization

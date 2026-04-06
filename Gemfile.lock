@@ -93,6 +93,9 @@ GEM
     breadcrumbs_on_rails (4.1.0)
       railties (>= 5.0)
     builder (3.3.0)
+    bullet (8.1.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     bundler-audit (0.9.3)
       bundler (>= 1.2.0)
       thor (~> 1.0)
@@ -288,6 +291,8 @@ GEM
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-linux)
     pg (1.6.3-x86_64-linux-musl)
+    pghero (3.7.0)
+      activerecord (>= 7.1)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -307,11 +312,11 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.2.6)
-    rack-attack (6.8.0)
-      rack (>= 1.0, < 4)
     rack-cors (3.0.0)
       logger
       rack (>= 3.0.14)
+    rack-mini-profiler (4.0.1)
+      rack (>= 1.2.0)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -340,6 +345,11 @@ GEM
     rails-html-sanitizer (1.7.0)
       loofah (~> 2.25)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails-pg-extras (5.6.16)
+      actionpack
+      activerecord
+      railties
+      ruby-pg-extras (= 5.6.16)
     railties (8.1.3)
       actionpack (= 8.1.3)
       activesupport (= 8.1.3)
@@ -409,6 +419,9 @@ GEM
       rubocop (>= 1.72)
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
+    ruby-pg-extras (5.6.16)
+      pg
+      terminal-table
     ruby-progressbar (1.13.0)
     ruby-vips (2.3.0)
       ffi (~> 1.12)
@@ -465,6 +478,8 @@ GEM
     tailwindcss-ruby (4.2.1-arm64-darwin)
     tailwindcss-ruby (4.2.1-x86_64-linux-gnu)
     tailwindcss-ruby (4.2.1-x86_64-linux-musl)
+    terminal-table (4.0.0)
+      unicode-display_width (>= 1.1.1, < 4)
     thor (1.5.0)
     thruster (0.1.20)
     thruster (0.1.20-aarch64-linux)
@@ -480,6 +495,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
+    uniform_notifier (1.18.0)
     uri (1.1.1)
     useragent (0.16.11)
     warden (1.2.9)
@@ -519,6 +535,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   breadcrumbs_on_rails
+  bullet
   bundler-audit
   capybara
   database_cleaner-active_record
@@ -539,12 +556,14 @@ DEPENDENCIES
   oj
   pagy
   pg (~> 1.1)
+  pghero (~> 3.5)
   propshaft
   puma (>= 6.0)
   pundit
-  rack-attack
   rack-cors
+  rack-mini-profiler
   rails (~> 8.1.2)
+  rails-pg-extras
   rspec-rails
   rubocop-rails-omakase
   selenium-webdriver
@@ -586,6 +605,7 @@ CHECKSUMS
   brakeman (8.0.4) sha256=7bf921fa9638544835df9aa7b3e720a9a72c0267f34f92135955edd80d4dcf6f
   breadcrumbs_on_rails (4.1.0) sha256=6146ecf669f6251507231028719d51d92b8f42f1f982b83a2481fa1465cb6cee
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
+  bullet (8.1.0) sha256=604b7e2636ec2137dcab3ba61a56248c39a0004a0c9405d58bad0686d23b98ff
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
@@ -674,6 +694,7 @@ CHECKSUMS
   pg (1.6.3-arm64-darwin) sha256=7240330b572e6355d7c75a7de535edb5dfcbd6295d9c7777df4d9dddfb8c0e5f
   pg (1.6.3-x86_64-linux) sha256=5d9e188c8f7a0295d162b7b88a768d8452a899977d44f3274d1946d67920ae8d
   pg (1.6.3-x86_64-linux-musl) sha256=9c9c90d98c72f78eb04c0f55e9618fe55d1512128e411035fe229ff427864009
+  pghero (3.7.0) sha256=a8d8497095dbe168bb03fe50a11309ab068cd1c1ef4c88d9bbeb97be4809f522
   pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
@@ -685,14 +706,15 @@ CHECKSUMS
   raabro (1.4.0) sha256=d4fa9ff5172391edb92b242eed8be802d1934b1464061ae5e70d80962c5da882
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
   rack (3.2.6) sha256=5ed78e1f73b2e25679bec7d45ee2d4483cc4146eb1be0264fc4d94cb5ef212c2
-  rack-attack (6.8.0) sha256=f2499fdebf85bcc05573a22dff57d24305ac14ec2e4156cd3c28d47cafeeecf2
   rack-cors (3.0.0) sha256=7b95be61db39606906b61b83bd7203fa802b0ceaaad8fcb2fef39e097bf53f68
+  rack-mini-profiler (4.0.1) sha256=485810c23211f908196c896ea10cad72ed68780ee2998bec1f1dfd7558263d78
   rack-session (2.1.1) sha256=0b6dc07dea7e4b583f58a48e8b806d4c9f1c6c9214ebc202ec94562cbea2e4e9
   rack-test (2.2.0) sha256=005a36692c306ac0b4a9350355ee080fd09ddef1148a5f8b2ac636c720f5c463
   rackup (2.3.1) sha256=6c79c26753778e90983761d677a48937ee3192b3ffef6bc963c0950f94688868
   rails (8.1.3) sha256=6d017ba5348c98fc909753a8169b21d44de14d2a0b92d140d1a966834c3c9cd3
   rails-dom-testing (2.3.0) sha256=8acc7953a7b911ca44588bf08737bc16719f431a1cc3091a292bca7317925c1d
   rails-html-sanitizer (1.7.0) sha256=28b145cceaf9cc214a9874feaa183c3acba036c9592b19886e0e45efc62b1e89
+  rails-pg-extras (5.6.16) sha256=8aae9a3c8279355cf4bdbed31e820f56c6c9238b3b45fbb491372660b8eb2de5
   railties (8.1.3) sha256=913eb0e0cb520aac687ffd74916bd726d48fa21f47833c6292576ef6a286de22
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
@@ -712,6 +734,7 @@ CHECKSUMS
   rubocop-performance (1.26.1) sha256=cd19b936ff196df85829d264b522fd4f98b6c89ad271fa52744a8c11b8f71834
   rubocop-rails (2.34.3) sha256=10d37989024865ecda8199f311f3faca990143fbac967de943f88aca11eb9ad2
   rubocop-rails-omakase (1.1.0) sha256=2af73ac8ee5852de2919abbd2618af9c15c19b512c4cfc1f9a5d3b6ef009109d
+  ruby-pg-extras (5.6.16) sha256=4f2c4b3ff4c420a0d5c49e8dbb4a4c699dd5126cb50cb4c0bff13018a324b146
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
   rubyzip (3.2.2) sha256=c0ed99385f0625415c8f05bcae33fe649ed2952894a95ff8b08f26ca57ea5b3c
@@ -733,6 +756,7 @@ CHECKSUMS
   tailwindcss-ruby (4.2.1-arm64-darwin) sha256=bcf222fb8542cf5433925623e5e7b257897fbb8291a2350daae870a32f2eeb91
   tailwindcss-ruby (4.2.1-x86_64-linux-gnu) sha256=201d0e5e5d4aba52cae4ee4bd1acd497d2790c83e7f15da964aab8ec93876831
   tailwindcss-ruby (4.2.1-x86_64-linux-musl) sha256=79fa48ad51e533545f9fdbb04227e1342a65a42c2bd1314118b95473d5612007
+  terminal-table (4.0.0) sha256=f504793203f8251b2ea7c7068333053f0beeea26093ec9962e62ea79f94301d2
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   thruster (0.1.20) sha256=c05f2fbcae527bbe093a6e6d84fb12d9d680617e7c162325d9b97e8e9d4b5201
   thruster (0.1.20-aarch64-linux) sha256=754f1701061235235165dde31e7a3bc87ec88066a02981ff4241fcda0d76d397
@@ -744,6 +768,7 @@ CHECKSUMS
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
   unicode-display_width (3.2.0) sha256=0cdd96b5681a5949cdbc2c55e7b420facae74c4aaf9a9815eee1087cb1853c42
   unicode-emoji (4.2.0) sha256=519e69150f75652e40bf736106cfbc8f0f73aa3fb6a65afe62fefa7f80b0f80f
+  uniform_notifier (1.18.0) sha256=4787785556f66f6418486da0f1d78b3239aaff98e2e7938fb05e2062b0ffce9d
   uri (1.1.1) sha256=379fa58d27ffb1387eaada68c749d1426738bd0f654d812fcc07e7568f5c57c6
   useragent (0.16.11) sha256=700e6413ad4bb954bb63547fa098dddf7b0ebe75b40cc6f93b8d54255b173844
   warden (1.2.9) sha256=46684f885d35a69dbb883deabf85a222c8e427a957804719e143005df7a1efd0

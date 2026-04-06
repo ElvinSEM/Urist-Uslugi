@@ -2,34 +2,31 @@ class ServicesController < ApplicationController
   before_action :set_service, only: :show
 
   def index
-    add_breadcrumb "Услуги", services_path
+    set_page_context(
+      title: "Юридические услуги",
+      description: "Каталог юридических услуг с фильтрацией по категориям и стоимости",
+      breadcrumbs: [["Услуги", services_path]],
+      og: { url: services_url }
+    )
     @filter = Search::ServicesFilter.new(search_params)
     scoped = policy_scope(Service).includes(:category).merge(Service.ordered)
     @pagy, @services = pagy(@filter.apply(scoped))
-    set_meta_tags(
-      title: "Юридические услуги",
-      description: "Каталог юридических услуг с фильтрацией по категориям и стоимости",
-      og: {
-        title: "Юридические услуги",
-        description: "Каталог юридических услуг с фильтрацией по категориям и стоимости",
-        type: "website",
-        url: services_url
-      }
-    )
   end
 
   def show
     authorize @service
-    add_breadcrumb "Услуги", services_path
-    add_breadcrumb @service.title, service_path(@service)
-    set_meta_tags(
+    description = helpers.meta_description(@service.description)
+    set_page_context(
       title: @service.title,
-      description: helpers.meta_description(@service.description),
+      description: description,
+      breadcrumbs: [
+        ["Услуги", services_path],
+        [@service.title, service_path(@service)]
+      ],
       og: {
-        title: @service.title,
-        description: helpers.meta_description(@service.description),
         type: "article",
-        url: service_url(@service)
+        url: service_url(@service),
+        description: description
       }
     )
   end

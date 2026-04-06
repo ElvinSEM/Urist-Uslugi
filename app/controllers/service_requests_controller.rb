@@ -2,34 +2,68 @@ class ServiceRequestsController < ApplicationController
   before_action :authenticate_user!, except: %i[new create]
 
   def index
-    add_breadcrumb "Мои заявки", service_requests_path
+    set_page_context(
+      title: "Мои заявки",
+      description: "Отслеживание статусов юридических заявок",
+      breadcrumbs: [["Мои заявки", service_requests_path]],
+      og: { url: service_requests_url }
+    )
     @service_requests = policy_scope(ServiceRequest).includes(:service, :client, :lawyer).recent
-    set_meta_tags(title: "Мои заявки", description: "Отслеживание статусов юридических заявок")
   end
 
   def show
     @service_request = ServiceRequest.find(params[:id])
     authorize @service_request
-    add_breadcrumb "Мои заявки", service_requests_path
-    add_breadcrumb "Заявка ##{@service_request.id}", service_request_path(@service_request)
-    set_meta_tags(title: "Заявка ##{@service_request.id}", description: "Детали и статус юридической заявки")
+    set_page_context(
+      title: "Заявка ##{@service_request.id}",
+      description: "Детали и статус юридической заявки",
+      breadcrumbs: [
+        ["Мои заявки", service_requests_path],
+        ["Заявка ##{@service_request.id}", service_request_path(@service_request)]
+      ],
+      og: { url: service_request_url(@service_request) }
+    )
   end
 
   def new
     @service_request = ServiceRequest.new(service_id: params[:service_id])
     @service = Service.find_by(id: params[:service_id])
-    add_breadcrumb "Услуги", services_path
-    add_breadcrumb "Новая заявка", new_service_request_path(service_id: params[:service_id])
-    set_meta_tags(title: "Новая заявка", description: "Форма отправки юридической заявки")
+    set_page_context(
+      title: "Новая заявка",
+      description: "Форма отправки юридической заявки",
+      breadcrumbs: [
+        ["Услуги", services_path],
+        ["Новая заявка", new_service_request_path(service_id: params[:service_id])]
+      ],
+      og: { url: new_service_request_url(service_id: params[:service_id]) }
+    )
   end
 
   def create
     @service_request = ServiceRequests::Create.call(params: service_request_params, actor: current_user)
-    redirect_to @service_request, notice: "Заявка отправлена"
+    respond_to do |format|
+      format.html { redirect_to @service_request, notice: "Заявка отправлена" }
+      format.turbo_stream do
+        flash.now[:notice] = "Заявка отправлена"
+        render turbo_stream: [
+          turbo_stream.update("lead_form", partial: "shared/lead_form_success", locals: { service_request: @service_request }),
+          turbo_stream.replace("flash", partial: "shared/flash")
+        ]
+      end
+    end
   rescue ActiveRecord::RecordInvalid => e
     @service_request = e.record
     @service = Service.find_by(id: @service_request.service_id)
-    render :new, status: :unprocessable_entity
+    respond_to do |format|
+      format.html { render :new, status: :unprocessable_entity }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(
+          "lead_form",
+          partial: "shared/lead_form_form",
+          locals: { service_request: @service_request, services: Service.published.ordered.includes(:category) }
+        ), status: :unprocessable_entity
+      end
+    end
   end
 
   private

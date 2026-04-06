@@ -1,0 +1,32 @@
+<section class="landing-section" id="services">
+  <%= render "shared/section_header",
+    eyebrow: "Услуги",
+    title: "Выберите подходящее решение",
+    subtitle: "Каталог собран из актуальных услуг. Каждая карточка ведет к подробностям и заявке."
+  %>
+
+  <% if services.any? %>
+    <div class="landing-grid landing-grid-services">
+      <% services.each do |service| %>
+        <article class="landing-card landing-service-card">
+          <p class="landing-card-kicker"><%= service.category_name %></p>
+          <h3 class="landing-card-title"><%= link_to service.title, service_path(service) %></h3>
+          <p class="landing-card-text"><%= truncate(service.description, length: 140) %></p>
+          <div class="landing-card-footer">
+            <strong class="landing-price"><%= number_to_currency(service.price, unit: "₽") %></strong>
+            <div class="landing-card-actions">
+              <%= link_to "Подробнее", service_path(service), class: "button button-secondary button-sm" %>
+              <%= link_to "Заявка", new_service_request_path(service_id: service.id), class: "button button-primary button-sm" %>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render "shared/empty_state", title: "Услуги пока не добавлены", description: "После публикации услуг они появятся здесь и в форме заявки." %>
+  <% end %>
+
+  <div class="landing-section-foot">
+    <%= link_to "Перейти к полному каталогу", services_path, class: "button button-secondary" %>
+  </div>
+</section>

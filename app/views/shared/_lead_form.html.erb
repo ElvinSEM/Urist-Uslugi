@@ -1,0 +1,32 @@
+<section class="landing-section landing-lead-section" id="lead-form">
+  <%= render "shared/section_header",
+    eyebrow: "Заявка",
+    title: "Оставьте краткое описание задачи",
+    subtitle: "Форма сохраняет заявку в системе и показывает подтверждение без перезагрузки страницы."
+  %>
+
+  <div class="landing-lead-layout">
+    <div class="landing-lead-copy">
+      <div class="landing-card landing-lead-note">
+        <h3 class="landing-card-title">Что важно указать</h3>
+        <ul class="landing-lead-list">
+          <li>Нужную услугу из каталога</li>
+          <li>Краткое описание ситуации</li>
+          <li>Контактные данные для обратной связи</li>
+        </ul>
+      </div>
+
+      <div class="landing-lead-meta">
+        <p><strong>Формат:</strong> онлайн-заявка</p>
+        <p><strong>Ответ:</strong> после отправки заявки</p>
+        <p><strong>Статус:</strong> сохранение заявки в системе</p>
+      </div>
+    </div>
+
+    <div class="landing-form-shell">
+      <turbo-frame id="lead_form">
+        <%= render "shared/lead_form_form", service_request: service_request, services: services %>
+      </turbo-frame>
+    </div>
+  </div>
+</section>

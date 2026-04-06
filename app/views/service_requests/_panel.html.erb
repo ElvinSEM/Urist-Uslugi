@@ -11,7 +11,7 @@
     <div><dt>Клиент</dt><dd><%= service_request.full_name %></dd></div>
     <div><dt>Email</dt><dd><%= mail_to service_request.email %></dd></div>
     <div><dt>Телефон</dt><dd><%= service_request.phone %></dd></div>
-    <div><dt>Юрист</dt><dd><%= service_request.lawyer&.full_name || "Назначается" %></dd></div>
+    <div><dt>Услуги Юриста</dt><dd><%= service_request.lawyer&.full_name || "Назначается" %></dd></div>
   </dl>
 
   <section class="panel panel-muted">

@@ -1,0 +1,8 @@
+<div class="landing-page">
+  <%= render "shared/hero" %>
+  <%= render "shared/services", services: @featured_services %>
+  <%= render "shared/advantages" %>
+  <%= render "shared/steps" %>
+  <%= render "shared/reviews" %>
+  <%= render "shared/lead_form", service_request: @service_request, services: @services %>
+</div>

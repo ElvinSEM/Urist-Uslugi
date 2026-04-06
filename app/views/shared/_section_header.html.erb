@@ -1,0 +1,17 @@
+<header class="landing-section-header">
+  <div class="landing-section-copy">
+    <% if local_assigns[:eyebrow].present? %>
+      <span class="eyebrow"><%= eyebrow %></span>
+    <% end %>
+    <h2 class="landing-section-title"><%= title %></h2>
+    <% if local_assigns[:subtitle].present? %>
+      <p class="landing-section-subtitle"><%= subtitle %></p>
+    <% end %>
+  </div>
+
+  <% if local_assigns[:action].present? %>
+    <div class="landing-section-action">
+      <%= action %>
+    </div>
+  <% end %>
+</header>

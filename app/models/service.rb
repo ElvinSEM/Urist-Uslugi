@@ -3,13 +3,14 @@ class Service < ApplicationRecord
   friendly_id :title, use: :slugged
   audited
 
-  belongs_to :category
+  belongs_to :category, inverse_of: :services
   has_many :service_requests, dependent: :restrict_with_exception
 
   scope :published, -> { where(published: true) }
   scope :ordered, -> { order(position: :asc, created_at: :desc) }
   scope :priced_from, ->(value) { where("price_cents >= ?", value.to_i * 100) if value.present? }
   scope :priced_to, ->(value) { where("price_cents <= ?", value.to_i * 100) if value.present? }
+  scope :for_category, ->(category_id) { where(category_id: category_id) if category_id.present? }
 
   validates :title, :description, :price_cents, :slug, presence: true
   validates :title, :slug, uniqueness: true

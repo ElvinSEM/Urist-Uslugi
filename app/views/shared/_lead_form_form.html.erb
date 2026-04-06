@@ -1,0 +1,48 @@
+<%= form_with model: service_request, url: service_requests_path, class: "landing-form", data: { controller: "form" } do |f| %>
+  <% if service_request.errors.any? %>
+    <div class="form-errors">
+      <strong>Проверьте форму:</strong>
+      <ul>
+        <% service_request.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="landing-form-grid">
+    <div class="field-group field-group-wide">
+      <%= f.label :service_id, "Услуга", class: "field-label" %>
+      <%= f.collection_select :service_id, services, :id, :title, { include_blank: "Выберите услугу" }, class: "field", required: true %>
+    </div>
+
+    <div class="field-group">
+      <%= f.label :full_name, "ФИО", class: "field-label" %>
+      <%= f.text_field :full_name, class: "field", autocomplete: "name", required: true %>
+    </div>
+
+    <div class="field-group">
+      <%= f.label :phone, "Телефон", class: "field-label" %>
+      <%= f.telephone_field :phone, class: "field", autocomplete: "tel", required: true %>
+    </div>
+
+    <div class="field-group field-group-wide">
+      <%= f.label :email, "Email", class: "field-label" %>
+      <%= f.email_field :email, class: "field", autocomplete: "email", required: true %>
+    </div>
+
+    <div class="field-group field-group-wide">
+      <%= f.label :description, "Описание задачи", class: "field-label" %>
+      <%= f.text_area :description, rows: 7, class: "field textarea", required: true, data: { form_target: "textarea", action: "input->form#updateCounter" } %>
+      <div class="field-meta">
+        <span>Кратко опишите ситуацию, сроки и важные детали.</span>
+        <strong data-form-target="counter">0 символов</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <p class="form-hint">Нажимая кнопку, вы отправляете заявку в систему.</p>
+    <%= f.submit "Отправить заявку", class: "button button-primary", data: { form_target: "submit" } %>
+  </div>
+<% end %>

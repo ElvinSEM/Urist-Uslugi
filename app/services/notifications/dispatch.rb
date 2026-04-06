@@ -12,8 +12,7 @@ module Notifications
         user: user,
         title: title,
         body: body,
-        notifiable: notifiable,
-        channel: :in_app
+        notifiable: notifiable
       )
 
       NotificationDeliveryJob.perform_later(user.id, title, body, notifiable&.class&.name, notifiable&.id)

@@ -4,7 +4,7 @@ class Admin::ServiceRequestsController < Admin::BaseController
   end
 
   def show
-    @service_request = ServiceRequest.find(params[:id])
+    @service_request = ServiceRequest.includes(:service, :client, :lawyer, :audits).find(params[:id])
   end
 
   def transition

@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def page_title(title = nil)
-    [title, "Юрист Услуги"].compact.join(" | ")
+    [title, "Услуги Юриста"].compact.join(" | ")
   end
 
   def meta_description(text)
@@ -35,7 +35,7 @@ module ApplicationHelper
       },
       provider: {
         "@type": "LegalService",
-        name: "Юрист Услуги",
+        name: "Услуги Юриста",
         url: root_url
       },
       url: service_url(service)

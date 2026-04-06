@@ -1,8 +1,8 @@
 <div class="mb-6 flex items-center justify-between">
-  <h1 class="text-3xl font-semibold">Services</h1>
-  <%= link_to "New", new_admin_service_path, class: "rounded-lg bg-amber-500 px-4 py-2 text-black" %>
+  <h1 class="text-3xl font-semibold">Услуги</h1>
+  <%= link_to "Создать", send("new_admin_#{resource_name}_path"), class: "rounded-lg bg-amber-500 px-4 py-2 text-black" %>
 </div>
-<% @services.each do |service| %>
+<% resources.each do |service| %>
   <div class="mb-3 rounded-xl bg-slate-900 p-4">
     <div class="flex items-center justify-between">
       <span><%= service.title %></span>
