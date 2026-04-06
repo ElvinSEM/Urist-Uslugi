@@ -1,11 +1,11 @@
 -- daily_stats
 CREATE MATERIALIZED VIEW IF NOT EXISTS daily_stats AS
 WITH dates AS (
-    SELECT generate_series(
-        date_trunc('day', NOW() - INTERVAL '30 days'),
-        date_trunc('day', NOW()),
-        '1 day'::interval
-    )::date AS day
+  SELECT generate_series(
+    date_trunc('day', NOW() - INTERVAL '30 days'),
+    date_trunc('day', NOW()),
+    '1 day'::interval
+  )::date AS day
 )
 SELECT
     dates.day,
@@ -24,69 +24,4 @@ FROM dates
 GROUP BY dates.day
 ORDER BY dates.day DESC;
 
-DO $$
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_class c
-        JOIN pg_namespace n ON n.oid = c.relnamespace
-        WHERE c.relname = 'idx_daily_stats_day'
-    ) THEN
-        EXECUTE 'CREATE UNIQUE INDEX idx_daily_stats_day ON daily_stats(day);';
-END IF;
-END$$;
-
---------------------------------------------------
-
--- top_services
-DO $$
-BEGIN
-    IF EXISTS (
-        SELECT 1 FROM pg_attribute a
-        JOIN pg_class c ON a.attrelid = c.oid
-        WHERE c.relname = 'service_requests' AND a.attname = 'completed_at'
-    ) THEN
-        EXECUTE $sql$
-            CREATE MATERIALIZED VIEW IF NOT EXISTS top_services AS
-SELECT
-    services.id,
-    services.title,
-    services.slug,
-    COUNT(service_requests.id) AS requests_count,
-    AVG(EXTRACT(EPOCH FROM (service_requests.completed_at - service_requests.created_at)))
-                                  FILTER (WHERE service_requests.completed_at IS NOT NULL) AS avg_completion_time_hours
-FROM services
-         LEFT JOIN service_requests ON services.id = service_requests.service_id
-WHERE service_requests.created_at > NOW() - INTERVAL '90 days'
-GROUP BY services.id
-ORDER BY requests_count DESC
-    LIMIT 100;
-$sql$;
-ELSE
-        EXECUTE $sql$
-            CREATE MATERIALIZED VIEW IF NOT EXISTS top_services AS
-SELECT
-    services.id,
-    services.title,
-    services.slug,
-    COUNT(service_requests.id) AS requests_count,
-    NULL AS avg_completion_time_hours
-FROM services
-         LEFT JOIN service_requests ON services.id = service_requests.service_id
-WHERE service_requests.created_at > NOW() - INTERVAL '90 days'
-GROUP BY services.id
-ORDER BY requests_count DESC
-    LIMIT 100;
-$sql$;
-END IF;
-END$$;
-
-DO $$
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_class c
-        JOIN pg_namespace n ON n.oid = c.relnamespace
-        WHERE c.relname = 'idx_top_services_id'
-    ) THEN
-        EXECUTE 'CREATE UNIQUE INDEX idx_top_services_id ON top_services(id);';
-END IF;
-END$$;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_daily_stats_day ON daily_stats(day);
