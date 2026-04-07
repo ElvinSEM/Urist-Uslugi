@@ -1,0 +1,10 @@
+<% content_for :admin_page_title, "New User" %>
+
+<%= render "admin/shared/page_header",
+  eyebrow: "Access",
+  title: "Новый пользователь",
+  subtitle: "Добавьте администратора, юриста или клиента.",
+  action_label: "Назад к списку",
+  action_path: admin_users_path %>
+
+<%= render "form", user: @user %>

@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   # before_action :authenticate_user!, if: :protected_area?
   before_action :set_meta_defaults
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from Pundit::NotAuthorizedError, with: :forbidden!
 
@@ -37,13 +38,20 @@ class ApplicationController < ActionController::Base
   def forbidden!
     redirect_back fallback_location: root_path, alert: "Недостаточно прав"
   end
+
   def after_sign_in_path_for(resource)
-    if resource.admin?
-      admin_root_path
-    else
-      root_path
-    end
+    return admin_root_path if resource.admin?
+
+    location = stored_location_for(resource)
+    location.present? && !location.start_with?("/admin") ? location : root_path
+  end
+
+  def after_sign_out_path_for(_resource_or_scope)
+    new_user_session_path
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name])
   end
 end
-
-

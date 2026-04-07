@@ -108,6 +108,13 @@ When implementing features:
 - Do NOT disable CSRF unless explicitly required
 - Validate all user inputs
 - Respect role-based authorization
+- Keep Devise auth forms on `form_with`/`form_for` paths that include CSRF tokens.
+- Do not add `skip_before_action :verify_authenticity_token` to web login or registration actions.
+- Keep JWT request injection scoped to API controllers and the Devise session destroy flow only; do not inject JWT into all HTML requests.
+- For Devise sign-in redirects, preserve `stored_location_for(resource)` before falling back to role-based paths.
+- Never send non-admin users to `/admin` from `stored_location_for`; fall back to `root_path` instead.
+- Registration forms must include `first_name` and `last_name`, because `User` validates them.
+- Permit sign-up and account update params for `first_name` and `last_name` in `ApplicationController`.
 
 ---
 

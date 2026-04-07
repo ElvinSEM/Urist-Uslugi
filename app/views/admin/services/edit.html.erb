@@ -1,2 +1,10 @@
-<h1 class="mb-6 text-3xl font-semibold">Edit Service</h1>
+<% content_for :admin_page_title, "Edit Service" %>
+
+<%= render "admin/shared/page_header",
+  eyebrow: "Catalog",
+  title: "Редактирование услуги",
+  subtitle: @service.title,
+  action_label: "Открыть карточку",
+  action_path: admin_service_path(@service) %>
+
 <%= render "form", service: @service %>

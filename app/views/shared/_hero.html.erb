@@ -1,19 +1,28 @@
 <section class="landing-hero">
   <div class="landing-hero-content">
     <div class="landing-hero-copy">
-      <span class="eyebrow">Юридические услуги онлайн</span>
-      <h1 class="landing-hero-title">Юридическая помощь, где понятен следующий шаг</h1>
-      <p class="landing-hero-subtitle">
-        Выберите услугу, оставьте заявку и получите сопровождение без лишней бюрократии.
-        Работаем с частными клиентами и бизнесом.
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="eyebrow mb-0">Юридические услуги онлайн</span>
+        <span class="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-sky-700">
+          Быстро и понятно
+        </span>
+      </div>
+
+      <h1 class="landing-hero-title max-w-3xl">
+        Юридическая помощь, где сразу ясно, что делать дальше
+      </h1>
+
+      <p class="landing-hero-subtitle max-w-2xl">
+        Выберите услугу, оставьте заявку и получите понятный план действий без лишней бюрократии.
+        Поддерживаем частных клиентов и бизнес.
       </p>
 
       <div class="landing-actions">
-        <%= link_to "Выбрать услугу", "#services", class: "button button-primary" %>
-        <%= link_to "Оставить заявку", "#lead-form", class: "button button-secondary" %>
+        <%= link_to "Выбрать услугу", "#services", class: "button button-primary button-sm" %>
+        <%= link_to "Оставить заявку", "#lead-form", class: "button button-secondary button-sm" %>
       </div>
 
-      <dl class="landing-hero-stats">
+      <dl class="landing-hero-stats max-w-2xl">
         <div class="landing-mini-stat">
           <dt>Сервисы</dt>
           <dd><%= @services.count %></dd>
@@ -23,24 +32,53 @@
           <dd>Онлайн</dd>
         </div>
         <div class="landing-mini-stat">
-          <dt>Фокус</dt>
+          <dt>Подход</dt>
           <dd>Понятно и по делу</dd>
         </div>
       </dl>
     </div>
 
-    <aside class="landing-hero-panel" aria-label="Быстрый старт">
-      <p class="landing-panel-kicker">Быстрый старт</p>
-      <h2 class="landing-panel-title">Что вы получите</h2>
-      <ul class="landing-panel-list">
-        <li>Подбор подходящей услуги без долгого поиска</li>
-        <li>Понятный маршрут по шагам и срокам</li>
-        <li>Быструю обратную связь по заявке</li>
-      </ul>
+    <aside class="landing-hero-panel relative isolate overflow-hidden" aria-label="Быстрый старт">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(14,165,233,0.14),_transparent_34%),radial-gradient(circle_at_bottom_left,_rgba(59,130,246,0.12),_transparent_28%)]"></div>
+      <div class="relative grid gap-5">
+        <div class="rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-sky-700">Что вы получите</p>
+          <h2 class="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
+            Сразу понятный следующий шаг
+          </h2>
+          <ul class="mt-4 grid gap-3 text-sm leading-6 text-slate-600">
+            <li class="flex gap-3">
+              <span class="mt-2 h-2 w-2 rounded-full bg-sky-500"></span>
+              Подбор подходящей услуги без долгого поиска
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-2 h-2 w-2 rounded-full bg-sky-500"></span>
+              Короткий маршрут по шагам и срокам
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-2 h-2 w-2 rounded-full bg-sky-500"></span>
+              Быстрая обратная связь по заявке
+            </li>
+          </ul>
+        </div>
 
-      <div class="landing-panel-note">
-        <strong>Направления:</strong>
-        <p>Договоры, претензии, регистрация бизнеса, сопровождение сделок и защита интересов.</p>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="rounded-3xl border border-slate-200 bg-white/85 p-5">
+            <p class="text-xs uppercase tracking-[0.22em] text-slate-500">Фокус</p>
+            <p class="mt-2 text-lg font-semibold text-slate-950">Договоры, претензии, регистрация бизнеса</p>
+          </div>
+          <div class="rounded-3xl border border-slate-200 bg-white/85 p-5">
+            <p class="text-xs uppercase tracking-[0.22em] text-slate-500">Формат</p>
+            <p class="mt-2 text-lg font-semibold text-slate-950">Единый интерфейс без лишнего шума</p>
+          </div>
+        </div>
+
+        <div class="rounded-3xl border border-slate-200 bg-slate-950 p-5 text-white shadow-[0_20px_50px_rgba(2,6,23,0.22)]">
+          <p class="text-xs uppercase tracking-[0.22em] text-sky-300">Направления</p>
+          <p class="mt-2 text-sm leading-6 text-slate-300">
+            Договоры, претензии, регистрация бизнеса, сопровождение сделок и защита интересов.
+          </p>
+        </div>
       </div>
     </aside>
   </div>

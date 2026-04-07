@@ -1,10 +1,12 @@
 class Api::V1::BaseController < ActionController::API
+  include ActionController::Cookies
   include ActionController::RequestForgeryProtection
   protect_from_forgery with: :null_session, if: -> { request.format.json? }
   include Devise::Controllers::Helpers
   include Pagy::Method
   include Pundit::Authorization
 
+  before_action :inject_jwt_from_cookie
   before_action :authenticate_user!, unless: :public_endpoint?
 
   rescue_from ActiveRecord::RecordNotFound do |error|
@@ -19,6 +21,13 @@ class Api::V1::BaseController < ActionController::API
 
   def public_endpoint?
     false
+  end
+
+  def inject_jwt_from_cookie
+    token = cookies.encrypted[:user_jwt]
+    return if token.blank?
+
+    request.env["HTTP_AUTHORIZATION"] ||= "Bearer #{token}"
   end
 
   def pagination_meta(pagy)

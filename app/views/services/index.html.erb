@@ -1,42 +1,127 @@
-<section class="hero-section">
-  <div class="hero-copy">
-    <span class="eyebrow">Legal Services Platform</span>
-    <%= section_heading("Юридические услуги", "Подбор услуг, прозрачная стоимость и быстрые онлайн-заявки для бизнеса и частных клиентов.") %>
+<section class="bg-slate-50">
+  <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
+      <div class="relative isolate overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(14,165,233,0.16),_transparent_28%),radial-gradient(circle_at_bottom_left,_rgba(59,130,246,0.12),_transparent_24%),linear-gradient(180deg,_#ffffff_0%,_#f8fafc_100%)] px-6 py-10 sm:px-8 lg:px-10 lg:py-12">
+        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-300/70 to-transparent"></div>
+
+        <div class="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] lg:items-end">
+          <div class="max-w-3xl space-y-5">
+            <span class="inline-flex items-center rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-sky-700">
+              Legal Services Platform
+            </span>
+
+            <div class="space-y-4">
+              <h1 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                Юридические услуги в понятном
+                <span class="text-sky-700">SaaS-формате</span>
+              </h1>
+              <p class="max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+                Подбор услуг, прозрачная стоимость и быстрые онлайн-заявки для бизнеса и частных клиентов.
+                Выберите нужное решение и оставьте заявку без лишних шагов.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3">
+              <%= link_to "Посмотреть услуги", "#services-grid", class: "inline-flex items-center justify-center rounded-full bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-200" %>
+              <%= link_to "Оставить заявку", new_service_request_path, class: "inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:text-slate-950 hover:shadow-md" %>
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+            <div class="rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-sm">
+              <dt class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">Услуг</dt>
+              <dd class="mt-2 text-3xl font-semibold text-slate-950"><%= Service.published.count %>+</dd>
+            </div>
+            <div class="rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-sm">
+              <dt class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">Категорий</dt>
+              <dd class="mt-2 text-3xl font-semibold text-slate-950"><%= Category.count %></dd>
+            </div>
+            <div class="rounded-3xl border border-emerald-200 bg-emerald-50/80 p-5 shadow-sm">
+              <dt class="text-xs font-medium uppercase tracking-[0.2em] text-emerald-700">Статус</dt>
+              <dd class="mt-2 text-3xl font-semibold text-emerald-700">Live</dd>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 px-6 py-6 sm:px-8 lg:px-10">
+        <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Фильтрация</p>
+            <h2 class="mt-1 text-xl font-semibold text-slate-950">Поиск и сортировка услуг</h2>
+          </div>
+          <p class="text-sm text-slate-500">Быстро находите нужную услугу по названию, категории и бюджету.</p>
+        </div>
+
+        <% form_with url: services_path, method: :get, class: "grid gap-3 md:grid-cols-2 xl:grid-cols-4", data: { controller: "filter" } do |f| %>
+          <div class="relative">
+            <svg class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"></circle>
+            </svg>
+            <%= f.text_field :query,
+              value: params[:query],
+              placeholder: "Поиск услуг",
+              class: "w-full rounded-2xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 shadow-sm outline-none transition duration-300 placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-100",
+              data: { action: "input->filter#submitDebounced" } %>
+          </div>
+
+          <%= f.collection_select :category_id,
+            Category.order(:name),
+            :id,
+            :name,
+            { include_blank: "Все категории" },
+            class: "w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition duration-300 focus:border-sky-400 focus:ring-4 focus:ring-sky-100",
+            data: { action: "change->filter#submitNow" } %>
+
+          <%= f.number_field :price_from,
+            value: params[:price_from],
+            placeholder: "Цена от",
+            class: "w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition duration-300 placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-100",
+            data: { action: "input->filter#submitDebounced" } %>
+
+          <%= f.number_field :price_to,
+            value: params[:price_to],
+            placeholder: "Цена до",
+            class: "w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition duration-300 placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-100",
+            data: { action: "input->filter#submitDebounced" } %>
+        <% end %>
+      </div>
+
+      <div id="services-grid" class="px-6 pb-8 sm:px-8 lg:px-10">
+        <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Каталог</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-950">Список услуг</h2>
+          </div>
+          <p class="text-sm text-slate-500"><%= @pagy.count %> услуг найдено</p>
+        </div>
+
+        <% if @services.any? %>
+          <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            <% @services.each do |service| %>
+              <%= render "shared/service_card", service: service %>
+            <% end %>
+          </div>
+
+          <% if @pagy.pages > 1 %>
+            <%= render "shared/service_pagination", pagy: @pagy %>
+          <% end %>
+        <% else %>
+          <div class="rounded-[1.75rem] border border-dashed border-slate-300 bg-slate-50 px-6 py-16 text-center">
+            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 7v10M7 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <h3 class="mt-5 text-xl font-semibold text-slate-950">Услуги не найдены</h3>
+            <p class="mt-2 text-sm leading-7 text-slate-500">Попробуйте изменить фильтры или очистить поисковый запрос.</p>
+            <div class="mt-6">
+              <%= link_to "Сбросить фильтры", services_path, class: "inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-slate-800" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <aside class="hero-panel">
-    <dl class="stats-grid">
-      <div class="stat-item">
-        <dt>Услуг</dt>
-        <dd><%= Service.published.count %>+</dd>
-      </div>
-      <div class="stat-item">
-        <dt>Категорий</dt>
-        <dd><%= Category.count %></dd>
-      </div>
-      <div class="stat-item">
-        <dt>Статусы</dt>
-        <dd>Live</dd>
-      </div>
-    </dl>
-  </aside>
-</section>
-
-<section class="panel" aria-labelledby="service-filter-heading">
-  <h2 id="service-filter-heading" class="panel-title">Поиск и фильтрация</h2>
-  <%= form_with url: services_path, method: :get, class: "filter-grid", data: { controller: "filter" } do |f| %>
-    <%= f.text_field :query, value: params[:query], placeholder: "Поиск по названию и описанию", class: "field", data: { action: "input->filter#submitDebounced" } %>
-    <%= f.collection_select :category_id, Category.order(:name), :id, :name, { include_blank: "Все категории" }, class: "field", data: { action: "change->filter#submitNow" } %>
-    <%= f.number_field :price_from, value: params[:price_from], placeholder: "Цена от", class: "field", data: { action: "input->filter#submitDebounced" } %>
-    <%= f.number_field :price_to, value: params[:price_to], placeholder: "Цена до", class: "field", data: { action: "input->filter#submitDebounced" } %>
-  <% end %>
-</section>
-
-<section class="services-grid" aria-label="Список услуг">
-  <% if @services.any? %>
-    <% @services.each do |service| %>
-      <%= render "shared/service_card", service: service %>
-    <% end %>
-  <% else %>
-    <%= render "shared/empty_state", title: "Услуги не найдены", description: "Попробуй изменить фильтры или очистить поисковый запрос." %>
-  <% end %>
 </section>

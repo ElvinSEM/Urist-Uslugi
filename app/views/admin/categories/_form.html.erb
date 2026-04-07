@@ -1,5 +1,20 @@
-<%= form_with model: [:admin, category], class: "grid gap-4 rounded-2xl bg-slate-900 p-6" do |f| %>
-  <%= f.text_field :name, placeholder: "Название", class: "rounded-lg border-slate-700 bg-slate-950" %>
-  <%= f.text_area :description, rows: 5, placeholder: "Описание", class: "rounded-lg border-slate-700 bg-slate-950" %>
-  <%= f.submit "Сохранить", class: "rounded-lg bg-amber-500 px-4 py-2 text-black" %>
+<%= form_with model: [:admin, category], class: "space-y-6" do |f| %>
+  <%= render "admin/shared/form_errors", object: category %>
+
+  <div class="grid gap-5 rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-[0_18px_40px_rgba(15,23,42,0.06)] sm:p-6">
+    <div class="grid gap-2">
+      <%= f.label :name, "Название", class: "text-sm font-medium text-slate-700" %>
+      <%= f.text_field :name, placeholder: "Например: Договоры", class: "rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" %>
+    </div>
+
+    <div class="grid gap-2">
+      <%= f.label :description, "Описание", class: "text-sm font-medium text-slate-700" %>
+      <%= f.text_area :description, rows: 6, placeholder: "Краткое описание категории", class: "rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" %>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <%= f.submit "Сохранить", class: "inline-flex items-center justify-center rounded-full bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-200" %>
+      <%= link_to "Отмена", admin_categories_path, class: "inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition duration-200 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950" %>
+    </div>
+  </div>
 <% end %>

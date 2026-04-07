@@ -1,9 +1,39 @@
-<h1 class="mb-6 text-3xl font-semibold">Users</h1>
-<div class="rounded-2xl bg-slate-900">
-  <% @users.each do |user| %>
-    <div class="flex items-center justify-between border-t border-slate-800 p-4 first:border-t-0">
-      <span><%= user.full_name %> • <%= user.email %></span>
-      <span><%= user.role %></span>
+<% content_for :admin_page_title, "Users" %>
+
+<%= render "admin/shared/page_header",
+  eyebrow: "Access",
+  title: "Пользователи",
+  subtitle: "Управляйте ролями клиентов, юристов и администраторов.",
+  action_label: "Создать пользователя",
+  action_path: new_admin_user_path %>
+
+<div class="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+  <div class="border-b border-slate-200 px-5 py-4 sm:px-6">
+    <p class="text-sm text-slate-500"><%= @users.count %> записей</p>
+  </div>
+
+  <% if @users.any? %>
+    <div class="divide-y divide-slate-200">
+      <% @users.each do |user| %>
+        <div class="flex flex-col gap-4 px-5 py-5 transition hover:bg-slate-50 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-3">
+              <h2 class="text-lg font-semibold text-slate-950"><%= user.full_name %></h2>
+              <span class="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700"><%= user.role %></span>
+            </div>
+            <p class="text-sm leading-6 text-slate-600"><%= user.email %></p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <%= link_to "Открыть", admin_user_path(user), class: "inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950" %>
+            <%= link_to "Редактировать", edit_admin_user_path(user), class: "inline-flex items-center justify-center rounded-full bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-200" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="px-5 py-16 sm:px-6">
+      <%= render "shared/empty_state", title: "Пользователей пока нет", description: "Создайте первого пользователя через админку." %>
     </div>
   <% end %>
 </div>

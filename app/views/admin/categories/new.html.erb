@@ -1,2 +1,10 @@
-<h1 class="mb-6 text-3xl font-semibold">New Category</h1>
+<% content_for :admin_page_title, "New Category" %>
+
+<%= render "admin/shared/page_header",
+  eyebrow: "Catalog",
+  title: "Новая категория",
+  subtitle: "Добавьте категорию для группировки услуг.",
+  action_path: admin_categories_path,
+  action_label: "Назад к списку" %>
+
 <%= render "form", category: @category %>

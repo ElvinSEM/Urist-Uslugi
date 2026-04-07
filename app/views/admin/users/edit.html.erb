@@ -1,8 +1,10 @@
-<h1 class="mb-6 text-3xl font-semibold">Edit User</h1>
-<%= form_with model: [:admin, @user], class: "grid gap-4 rounded-2xl bg-slate-900 p-6" do |f| %>
-  <%= f.text_field :first_name, class: "rounded-lg border-slate-700 bg-slate-950" %>
-  <%= f.text_field :last_name, class: "rounded-lg border-slate-700 bg-slate-950" %>
-  <%= f.email_field :email, class: "rounded-lg border-slate-700 bg-slate-950" %>
-  <%= f.select :role, User.roles.keys, {}, class: "rounded-lg border-slate-700 bg-slate-950" %>
-  <%= f.submit "Сохранить", class: "rounded-lg bg-amber-500 px-4 py-2 text-black" %>
-<% end %>
+<% content_for :admin_page_title, "Edit User" %>
+
+<%= render "admin/shared/page_header",
+  eyebrow: "Access",
+  title: "Редактирование пользователя",
+  subtitle: @user.full_name,
+  action_label: "Открыть карточку",
+  action_path: admin_user_path(@user) %>
+
+<%= render "form", user: @user %>

@@ -1,10 +1,7 @@
 class Admin::BaseController < ApplicationController
+  include AdminAccess
 
   layout "admin"
 
-  private
-
-  def ensure_admin!
-    raise Pundit::NotAuthorizedError unless current_user&.admin?
-  end
+  # before_action :authenticate_user!
 end

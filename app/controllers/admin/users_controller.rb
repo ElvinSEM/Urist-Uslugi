@@ -1,21 +1,22 @@
-class Admin::UsersController < Admin::BaseController
-  def index
-    @users = User.order(created_at: :desc)
-  end
-
-  def edit
-    @user = User.find(params[:id])
-  end
-
-  def update
-    @user = User.find(params[:id])
-    @user.update!(user_params)
-    redirect_to admin_users_path, notice: "Пользователь обновлен"
-  end
-
+class Admin::UsersController < Admin::CrudController
   private
 
-  def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :role)
+  def resource_class
+    User
+  end
+
+  def collection_scope
+    User.order(created_at: :desc)
+  end
+
+  def resource_params
+    params.require(:user).permit(:first_name, :last_name, :email, :role, :password, :password_confirmation).tap do |attrs|
+      attrs.delete(:password) if attrs[:password].blank?
+      attrs.delete(:password_confirmation) if attrs[:password_confirmation].blank?
+    end
+  end
+
+  def resource_label
+    "Пользователь"
   end
 end

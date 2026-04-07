@@ -1,0 +1,10 @@
+<% if object.respond_to?(:errors) && object.errors.any? %>
+  <div class="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900 shadow-sm">
+    <p class="font-semibold">Проверьте форму</p>
+    <ul class="mt-2 list-disc space-y-1 pl-5">
+      <% object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

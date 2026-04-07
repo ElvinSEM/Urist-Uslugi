@@ -1,10 +1,13 @@
 class Admin::CrudController < Admin::BaseController
-  before_action :set_resource, only: %i[edit update destroy]
+  before_action :set_resource, only: %i[show edit update destroy]
   helper_method :resource, :resources, :resource_label, :resource_name, :resources_label
 
   def index
     @resources = collection_scope
     assign_collection_instance
+  end
+
+  def show
   end
 
   def new
@@ -17,7 +20,7 @@ class Admin::CrudController < Admin::BaseController
     assign_resource_instance
 
     if @resource.save
-      redirect_to collection_path, notice: "#{resource_label} создана"
+      redirect_to collection_path, notice: "Сохранено"
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,7 +31,7 @@ class Admin::CrudController < Admin::BaseController
 
   def update
     if resource.update(resource_params)
-      redirect_to collection_path, notice: "#{resource_label} обновлена"
+      redirect_to collection_path, notice: "Сохранено"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -36,7 +39,7 @@ class Admin::CrudController < Admin::BaseController
 
   def destroy
     resource.destroy!
-    redirect_to collection_path, notice: "#{resource_label} удалена"
+    redirect_to collection_path, notice: "Удалено"
   end
 
   private
