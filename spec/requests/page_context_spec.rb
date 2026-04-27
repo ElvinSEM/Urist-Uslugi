@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Page context", type: :request do
-  render_views
-
   describe "services index" do
     before do
       create_list(:service, 2)
