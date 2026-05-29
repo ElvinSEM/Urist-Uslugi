@@ -10,7 +10,10 @@ class ServicesController < ApplicationController
     )
     @filter = Search::ServicesFilter.new(search_params)
     scoped = policy_scope(Service).includes(:category).merge(Service.ordered)
-    @pagy, @services = pagy(@filter.apply(scoped))
+    @filtered_services = @filter.apply(scoped)
+    @pagy, @services = pagy(@filtered_services)
+    @service_groups = Services::AccordionBuilder.call(@filtered_services)
+    @service_count = @filtered_services.count
   end
 
   def show

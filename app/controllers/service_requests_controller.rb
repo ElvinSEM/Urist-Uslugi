@@ -1,5 +1,5 @@
 class ServiceRequestsController < ApplicationController
-  before_action :authenticate_user!, except: %i[new create]
+  before_action :authenticate_user!, except: %i[new create success]
 
   def index
     set_page_context(
@@ -42,7 +42,13 @@ class ServiceRequestsController < ApplicationController
   def create
     @service_request = ServiceRequests::Create.call(params: service_request_params, actor: current_user)
     respond_to do |format|
-      format.html { redirect_to @service_request, notice: "Заявка отправлена" }
+      format.html do
+        if current_user.present?
+          redirect_to @service_request, notice: "Заявка отправлена"
+        else
+          redirect_to success_service_requests_path, notice: "Заявка отправлена"
+        end
+      end
       format.turbo_stream do
         flash.now[:notice] = "Заявка отправлена"
         render turbo_stream: [
@@ -64,6 +70,18 @@ class ServiceRequestsController < ApplicationController
         ), status: :unprocessable_entity
       end
     end
+  end
+
+  def success
+    set_page_context(
+      title: "Заявка отправлена",
+      description: "Спасибо. Мы получили вашу заявку и уже начали обработку.",
+      breadcrumbs: [
+        ["Услуги", services_path],
+        ["Заявка отправлена", success_service_requests_path]
+      ],
+      og: { url: success_service_requests_url }
+    )
   end
 
   private

@@ -1,6 +1,8 @@
 Devise.setup do |config|
   config.mailer_sender = ENV.fetch("DEFAULT_FROM_EMAIL", "no-reply@uristuslugi.local")
   require "devise/orm/active_record"
+  config.responder.error_status = :unprocessable_entity
+  config.responder.redirect_status = :see_other
   config.case_insensitive_keys = [:email]
   config.strip_whitespace_keys = [:email]
   config.skip_session_storage = [:http_auth, :params_auth]

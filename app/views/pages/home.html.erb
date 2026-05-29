@@ -1,8 +1,7 @@
-<div class="landing-page">
-  <%= render "shared/hero" %>
-  <%= render "shared/services", services: @featured_services %>
-  <%= render "shared/advantages" %>
-  <%= render "shared/steps" %>
-  <%= render "shared/reviews" %>
-  <%= render "shared/lead_form", service_request: @service_request, services: @services %>
+<div class="bg-slate-50">
+  <%= render "shared/landing_hero", services_count: @services.count %>
+  <%= render "shared/landing_services_preview", services: @featured_services %>
+  <%= render "shared/landing_why_us" %>
+  <%= render "shared/landing_blog_preview", posts: @featured_posts %>
+  <%= render "shared/landing_cta" %>
 </div>

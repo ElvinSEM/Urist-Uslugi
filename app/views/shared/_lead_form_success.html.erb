@@ -3,7 +3,7 @@
   <h3 class="landing-card-title">Спасибо, мы получили ваш запрос</h3>
   <p class="landing-card-text">Заявка сохранена. Мы свяжемся с вами после обработки обращения.</p>
   <div class="landing-card-actions">
-    <%= link_to "Вернуться к услугам", "#services", class: "button button-secondary" %>
-    <%= link_to "Оставить еще одну заявку", "#lead-form", class: "button button-primary" %>
+    <%= link_to "Вернуться к услугам", services_path, class: "button button-secondary" %>
+    <%= link_to "Оставить еще одну заявку", root_path(anchor: "lead-form"), class: "button button-primary" %>
   </div>
 </div>

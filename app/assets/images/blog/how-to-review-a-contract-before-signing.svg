@@ -1,0 +1,27 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="0.55" stop-color="#0B5CAB"/>
+      <stop offset="1" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="card" x1="520" y1="180" x2="1120" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0.97"/>
+      <stop offset="1" stop-color="#E0F2FE" stop-opacity="0.92"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" rx="72" fill="url(#bg)"/>
+  <circle cx="1280" cy="200" r="180" fill="#7DD3FC" fill-opacity="0.18"/>
+  <circle cx="250" cy="820" r="220" fill="#BFDBFE" fill-opacity="0.15"/>
+  <rect x="440" y="160" width="720" height="680" rx="44" fill="url(#card)" stroke="white" stroke-opacity="0.25"/>
+  <rect x="540" y="250" width="520" height="26" rx="13" fill="#0F172A" fill-opacity="0.12"/>
+  <rect x="540" y="308" width="430" height="20" rx="10" fill="#0F172A" fill-opacity="0.1"/>
+  <rect x="540" y="350" width="480" height="20" rx="10" fill="#0F172A" fill-opacity="0.1"/>
+  <rect x="540" y="392" width="390" height="20" rx="10" fill="#0F172A" fill-opacity="0.1"/>
+  <rect x="540" y="470" width="520" height="170" rx="28" fill="#0EA5E9" fill-opacity="0.12"/>
+  <path d="M620 520h220M620 560h320M620 600h180" stroke="#0B5CAB" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="1015" cy="565" r="58" fill="#0EA5E9" fill-opacity="0.95"/>
+  <path d="M1000 565l13 13 29-35" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M360 370l110-80" stroke="white" stroke-opacity="0.32" stroke-width="20" stroke-linecap="round"/>
+  <path d="M1240 650l110 80" stroke="white" stroke-opacity="0.32" stroke-width="20" stroke-linecap="round"/>
+</svg>

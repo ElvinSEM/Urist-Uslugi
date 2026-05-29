@@ -1,49 +1,67 @@
-<section class="min-h-[calc(100vh-5rem)] bg-slate-950 px-4 py-10 sm:px-6 lg:px-8">
-  <div class="mx-auto grid min-h-[calc(100vh-7rem)] max-w-6xl items-center lg:grid-cols-[0.95fr_1.05fr]">
-    <div class="rounded-[2rem] border border-slate-800 bg-[radial-gradient(circle_at_top_right,_rgba(14,165,233,0.18),_transparent_30%),linear-gradient(180deg,_rgba(15,23,42,0.98),_rgba(2,6,23,0.98))] p-8 shadow-[0_30px_100px_rgba(2,6,23,0.45)] sm:p-10 lg:p-12">
-      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-sky-400">Account Access</p>
-      <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-        <%= local_assigns[:action_title].presence || "Регистрация" %>
+<section class="min-h-screen bg-slate-50 px-4 py-10 sm:px-6 lg:px-8">
+  <div class="mx-auto grid min-h-[calc(100vh-5rem)] max-w-6xl items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+    <div class="rounded-[2rem] border border-slate-200 bg-[radial-gradient(circle_at_top_right,_rgba(14,165,233,0.12),_transparent_30%),linear-gradient(180deg,_#ffffff_0%,_#f8fafc_100%)] p-8 shadow-[0_30px_100px_rgba(15,23,42,0.12)] sm:p-10 lg:p-12">
+      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-sky-700">Account Access</p>
+      <h1 class="mt-4 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+        <%= local_assigns[:action_title].presence || "Профиль" %>
       </h1>
-      <p class="mt-4 max-w-xl text-base leading-8 text-slate-300">
-        Создайте учётную запись для доступа к платформе.
+      <p class="mt-4 max-w-xl text-base leading-8 text-slate-600">
+        <%= resource.persisted? ? "Обновите профиль и при необходимости пароль." : "Создайте аккаунт, чтобы сохранять заявки и отслеживать статусы." %>
       </p>
     </div>
 
-    <div class="-mt-6 lg:mt-0 lg:-mr-10">
-      <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:p-8"><section class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <div class="w-full max-w-md bg-white rounded-xl shadow-md p-8 space-y-6">
-          <h1 class="text-2xl font-semibold text-gray-800 text-center">Регистрация админа</h1>
+    <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_30px_80px_rgba(15,23,42,0.14)] sm:p-8">
+      <%= form_with model: resource,
+                    as: resource_name,
+                    url: registration_path(resource_name),
+                    method: resource.persisted? ? :put : :post,
+                    local: true,
+                    html: { class: "space-y-6" } do |f| %>
+        <%= render "devise/shared/form_errors", resource: resource %>
 
-          <%= form_with model: resource,
-                        as: resource_name,
-                        url: registration_path(resource_name),
-                        local: true,
-                        html: { class: "space-y-4" } do |f| %>
-            <div>
-              <%= f.label :email, "Email", class: "block text-sm font-medium text-gray-700" %>
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mt-1 w-full rounded-md border-gray-300 shadow-sm px-3 py-2 focus:ring-sky-500 focus:border-sky-500" %>
-            </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="grid gap-2">
+            <%= f.label :first_name, "Имя", class: "text-sm font-medium text-slate-700" %>
+            <%= f.text_field :first_name, autofocus: true, autocomplete: "given-name", required: true, class: "rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" %>
+          </div>
 
-            <div>
-              <%= f.label :password, "Пароль", class: "block text-sm font-medium text-gray-700" %>
-              <%= f.password_field :password, autocomplete: "new-password", class: "mt-1 w-full rounded-md border-gray-300 shadow-sm px-3 py-2 focus:ring-sky-500 focus:border-sky-500" %>
-            </div>
-
-            <div>
-              <%= f.label :password_confirmation, "Подтверждение пароля", class: "block text-sm font-medium text-gray-700" %>
-              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-1 w-full rounded-md border-gray-300 shadow-sm px-3 py-2 focus:ring-sky-500 focus:border-sky-500" %>
-            </div>
-
-            <%= f.submit "Зарегистрироваться", class: "w-full bg-sky-600 text-white py-2 rounded-md hover:bg-sky-500" %>
-          <% end %>
-
-          <div class="text-center text-sm text-gray-600">
-            <%= link_to "Вход", new_session_path(resource_name), class: "text-sky-600 hover:underline" %> |
-            <%= link_to "На сайт", root_path, class: "text-gray-700 hover:underline" %>
+          <div class="grid gap-2">
+            <%= f.label :last_name, "Фамилия", class: "text-sm font-medium text-slate-700" %>
+            <%= f.text_field :last_name, autocomplete: "family-name", required: true, class: "rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" %>
           </div>
         </div>
-      </section></div>
+
+        <div class="grid gap-2">
+          <%= f.label :email, "Email", class: "text-sm font-medium text-slate-700" %>
+          <%= f.email_field :email, autocomplete: "email", required: true, class: "rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" %>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="grid gap-2">
+            <%= f.label :password, "Пароль", class: "text-sm font-medium text-slate-700" %>
+            <%= f.password_field :password, autocomplete: "new-password", required: !resource.persisted?, class: "rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" %>
+            <p class="text-xs leading-5 text-slate-500"><%= resource.persisted? ? "Оставьте пустым, если пароль менять не нужно." : "Минимум 8 символов." %></p>
+          </div>
+
+          <div class="grid gap-2">
+            <%= f.label :password_confirmation, "Подтверждение", class: "text-sm font-medium text-slate-700" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", required: !resource.persisted?, class: "rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" %>
+          </div>
+        </div>
+
+        <% if resource.persisted? %>
+          <div class="grid gap-2">
+            <%= f.label :current_password, "Текущий пароль", class: "text-sm font-medium text-slate-700" %>
+            <%= f.password_field :current_password, autocomplete: "current-password", required: true, class: "rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" %>
+            <p class="text-xs leading-5 text-slate-500">Требуется для подтверждения изменений профиля.</p>
+          </div>
+        <% end %>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <%= f.submit submit_label, class: "inline-flex items-center justify-center rounded-full bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-200" %>
+          <%= link_to "На сайт", root_path, class: "inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition duration-200 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </section>

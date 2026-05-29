@@ -1,6 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.secret_key_base = ENV.fetch("SECRET_KEY_BASE", "test-secret-key-base")
   config.enable_reloading = false
   config.eager_load = ENV["CI"].present?
   config.public_file_server.headers = { "cache-control" => "public, max-age=3600" }

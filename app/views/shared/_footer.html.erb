@@ -1,21 +1,42 @@
-<footer class="site-footer">
-  <div class="site-shell footer-grid">
-    <section>
-      <h2 class="footer-title">Услуги Юриста</h2>
-      <p class="footer-text">SEO-оптимизированная юридическая платформа с заявками, уведомлениями и прозрачным маршрутом клиента.</p>
-    </section>
-    <section>
-      <h2 class="footer-title">Навигация</h2>
-      <nav class="footer-nav" aria-label="Footer">
-        <%= link_to "Услуги", services_path %>
-        <%= link_to "Sitemap", "/sitemap.xml" %>
-        <%= link_to "Health", "/health" %>
-      </nav>
-    </section>
-    <section>
-      <h2 class="footer-title">Контакты</h2>
-      <p class="footer-text">Email: <a href="mailto:info@uristuslugi.local">info@uristuslugi.local</a></p>
-      <p class="footer-text">Телефон: <a href="tel:+79990001122">+7 999 000-11-22</a></p>
-    </section>
+<footer id="contacts" class="border-t border-slate-200 bg-slate-950 text-white">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)_minmax(0,0.8fr)]">
+      <div class="max-w-xl">
+        <div class="flex items-center gap-3">
+          <span class="inline-grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-white/10 text-sm font-black">ПЭ</span>
+          <div>
+            <h2 class="text-xl font-semibold tracking-[-0.04em]">Правовой элемент</h2>
+            <p class="text-sm text-slate-400">Центр юридической помощи</p>
+          </div>
+        </div>
+
+        <p class="mt-5 max-w-lg text-sm leading-7 text-slate-300">
+          Современный юридический сервис с понятным маршрутом клиента, быстрыми заявками и аккуратной подачей материалов.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Навигация</h3>
+        <nav class="mt-4 grid gap-3 text-sm">
+          <%= link_to "Услуги", services_path, class: "text-slate-200 transition hover:text-white" %>
+          <%= link_to "Преимущества", root_path(anchor: "why-us"), class: "text-slate-200 transition hover:text-white" %>
+          <%= link_to "Блог", posts_path, class: "text-slate-200 transition hover:text-white" %>
+          <%= link_to "Заявка", new_service_request_path, class: "text-slate-200 transition hover:text-white" %>
+        </nav>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Контакты</h3>
+        <div class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+          <p>Телефон: <a href="tel:+380634259030" class="text-white transition hover:text-sky-300">+38 063 425 90 30</a></p>
+          <p>Email: <a href="mailto:info@pravoelement.local" class="text-white transition hover:text-sky-300">info@pravoelement.local</a></p>
+          <p>Формат: онлайн консультации и сопровождение</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10 border-t border-white/10 pt-6 text-sm text-slate-500">
+      © <%= Time.current.year %> Правовой элемент. Все права защищены.
+    </div>
   </div>
 </footer>

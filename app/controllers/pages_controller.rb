@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   def home
     @services = Service.published.ordered.includes(:category)
     @featured_services = @services.limit(6)
+    @featured_posts = Post.published.recent_first.limit(3)
     @service_request = ServiceRequest.new(service_id: @services.first&.id)
 
     set_page_context(

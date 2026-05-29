@@ -1,0 +1,40 @@
+<details class="group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.06)]" <%= "open" if open %>>
+  <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 sm:px-6">
+    <div class="flex min-w-0 items-center gap-4">
+      <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-50 text-sky-700 ring-1 ring-sky-100 transition duration-300 group-open:bg-sky-600 group-open:text-white group-open:ring-sky-600">
+        <span class="text-sm font-semibold"><%= count %></span>
+      </div>
+
+      <div class="min-w-0">
+        <div class="flex flex-wrap items-center gap-3">
+          <h3 class="text-xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-2xl"><%= title %></h3>
+          <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500"><%= count %></span>
+        </div>
+        <p class="mt-1 text-sm leading-6 text-slate-500"><%= subtitle %></p>
+      </div>
+    </div>
+
+    <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-500 transition duration-300 group-open:rotate-180">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </span>
+  </summary>
+
+  <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-open:grid-rows-[1fr]">
+    <div class="overflow-hidden border-t border-slate-100 px-5 py-5 sm:px-6 sm:py-6">
+      <% if services.any? %>
+        <div class="grid gap-4 xl:grid-cols-2">
+          <% services.each do |service| %>
+            <%= render "shared/service_card", service: service %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50 px-6 py-10 text-center">
+          <h4 class="text-lg font-semibold text-slate-950">В этой категории пока нет услуг</h4>
+          <p class="mt-2 text-sm leading-7 text-slate-500">Как только появятся новые услуги, они будут показаны здесь без изменения структуры страницы.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</details>

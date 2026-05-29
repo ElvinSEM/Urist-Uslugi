@@ -92,21 +92,22 @@
         <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Каталог</p>
-            <h2 class="mt-1 text-2xl font-semibold text-slate-950">Список услуг</h2>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-950">Список услуг по категориям</h2>
           </div>
-          <p class="text-sm text-slate-500"><%= @pagy.count %> услуг найдено</p>
+          <p class="text-sm text-slate-500"><%= @service_count %> услуг найдено</p>
         </div>
 
-        <% if @services.any? %>
-          <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            <% @services.each do |service| %>
-              <%= render "shared/service_card", service: service %>
+        <% if @service_count.positive? %>
+          <div class="grid gap-4">
+            <% @service_groups.each do |group| %>
+              <%= render "shared/services_accordion_category",
+                title: group[:title],
+                subtitle: group[:subtitle],
+                count: group[:count],
+                services: group[:services],
+                open: group[:open] %>
             <% end %>
           </div>
-
-          <% if @pagy.pages > 1 %>
-            <%= render "shared/service_pagination", pagy: @pagy %>
-          <% end %>
         <% else %>
           <div class="rounded-[1.75rem] border border-dashed border-slate-300 bg-slate-50 px-6 py-16 text-center">
             <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">

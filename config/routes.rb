@@ -20,7 +20,10 @@ Rails.application.routes.draw do
 
   resources :categories, only: :show, param: :slug
   resources :services, only: %i[index show], param: :slug
-  resources :service_requests, only: %i[index show new create]
+  resources :posts, only: %i[index show]
+  resources :service_requests, only: %i[index show new create] do
+    collection { get :success }
+  end
   resources :notifications, only: %i[index show]
 
   namespace :api do

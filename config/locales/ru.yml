@@ -1,5 +1,35 @@
 ru:
   hello: "Привет"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "не может быть пустым"
+      invalid: "имеет неверное значение"
+      taken: "уже занят"
+      confirmation: "не совпадает с подтверждением"
+      too_short:
+        one: "слишком короткое (минимум %{count} символ)"
+        few: "слишком короткое (минимум %{count} символа)"
+        many: "слишком короткое (минимум %{count} символов)"
+        other: "слишком короткое (минимум %{count} символа)"
+  activerecord:
+    models:
+      user: "Пользователь"
+      service_request: "Заявка"
+    attributes:
+      user:
+        first_name: "Имя"
+        last_name: "Фамилия"
+        email: "Email"
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
+        current_password: "Текущий пароль"
+      service_request:
+        full_name: "ФИО"
+        email: "Email"
+        phone: "Телефон"
+        description: "Описание задачи"
+        service: "Услуга"
   time:
     formats:
       short: "%d.%m.%Y %H:%M"

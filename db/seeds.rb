@@ -100,4 +100,41 @@ clients.each do |client|
   )
 end
 
+# === Blog Posts ===
+[
+  {
+    title: "How to Review a Contract Before Signing",
+    content: <<~TEXT,
+      A careful contract review starts with the parties, scope, deadlines, and payment terms.
+
+      Check whether responsibilities are clear, penalties are realistic, and cancellation clauses are balanced.
+      A short legal review before signing usually prevents bigger disputes later.
+    TEXT
+    published: true
+  },
+  {
+    title: "Choosing the Right Business Structure",
+    content: <<~TEXT,
+      The right legal structure depends on risk, tax treatment, ownership goals, and how quickly the business may grow.
+
+      For many projects, the best choice is not the most common one, but the one that matches the operating model.
+    TEXT
+    published: true
+  },
+  {
+    title: "When to Update Your Legal Documents",
+    content: <<~TEXT,
+      Legal documents should be reviewed after business changes, new partnerships, or major shifts in regulation.
+
+      A document that was correct a year ago can become incomplete or risky after the business changes.
+    TEXT
+    published: true
+  }
+].each do |attrs|
+  post = Post.find_or_initialize_by(title: attrs[:title])
+  post.content = attrs[:content].strip
+  post.published = attrs[:published]
+  post.save!
+end
+
 puts "✅ Сиды успешно загружены!"

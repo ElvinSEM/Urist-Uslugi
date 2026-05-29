@@ -1,5 +1,9 @@
+require "securerandom"
+
 module ServiceRequests
   class Create < ApplicationService
+    GUEST_EMAIL = ENV.fetch("GUEST_CLIENT_EMAIL", "client@example.com")
+
     def initialize(params:, actor:)
       @params = params
       @actor = actor
@@ -20,7 +24,12 @@ module ServiceRequests
     end
 
     def guest_client
-      User.find_by!(email: ENV.fetch("GUEST_CLIENT_EMAIL", "client@example.com"))
+      User.find_or_create_by!(email: GUEST_EMAIL) do |user|
+        user.first_name = ENV.fetch("GUEST_CLIENT_FIRST_NAME", "Guest")
+        user.last_name = ENV.fetch("GUEST_CLIENT_LAST_NAME", "Client")
+        user.password = SecureRandom.hex(16)
+        user.role = :client
+      end
     end
 
     def permitted_params

@@ -3,7 +3,7 @@
 
   <% if service_request.errors.any? %>
     <div class="form-errors">
-      <strong>Проверь форму:</strong>
+      <strong>Проверьте форму:</strong>
       <ul>
         <% service_request.errors.full_messages.each do |message| %>
           <li><%= message %></li>
