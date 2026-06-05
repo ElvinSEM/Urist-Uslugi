@@ -56,7 +56,7 @@ group :test do
   gem "shoulda-matchers"
   gem "database_cleaner-active_record"
 end
-gem 'pghero', '~> 3.5'
+gem 'pghero', '~> 3.8'
 gem 'rack-mini-profiler'
 gem 'bullet', group: :development
 gem 'rails-pg-extras', group: :development
